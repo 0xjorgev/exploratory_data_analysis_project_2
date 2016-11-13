@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "# Library\nlibrary(dplyr)\nlibrary(lattice)\n\n# Set working directory\n# This assumes that both of the datasource files are in sub directory named data\nsetwd(dir = \".\")\n\n#Read both datasources\nNEI <- readRDS(\"./data/summarySCC_PM25.rds\")\nSCC <- readRDS(\"./data/Source_Classification_Code.rds\")\n\n# Create dataframes\nSCC_df  <-tbl_df(SCC)\nNEI_df <- tbl_df(NEI)\n\n# Combine both dataframes to create a new datasource\nCombinedSet<- full_join(NEI_df, SCC_df, by = \"SCC\")\nCombinedSet_df <- tbl_df(CombinedSet)\n\nBaltimoreVsLa <- CombinedSet_df %>% \n  group_by(EI.Sector) %>%\n  filter(fips == c('24510','06037')) %>%\n  filter(grepl('Mobile', EI.Sector))\n\n# Accumulate yearly emissions\nBaltimoreEmissions_byCity <- BaltimoreVsLa %>% \n  group_by(EI.Sector, fips) %>% \n  summarize(annualEmissions = (sum(Emissions)))\n\n# Create PNG file\npng(filename = \"Plot6.png\", height = 600, width = 600)\n\nxyplot(annualEmissions ~ EI.Sector | fips, data = BaltimoreEmissions_byCity, layout = c(2, 1))\n\n# Shut graphics device off\ndev.off()",
+    "created" : 1479074718265.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "21914672",
+    "id" : "BD2DF64E",
+    "lastKnownWriteTime" : 1479075422,
+    "last_content_update" : 1479075422224,
+    "path" : "~/dataScience/Course IV/Week IV/Plot6.R",
+    "project_path" : "Plot6.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
