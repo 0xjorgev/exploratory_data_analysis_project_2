@@ -15,7 +15,7 @@ setwd(dir = ".")
 
 #Read both datasources
 NEI <- readRDS("./data/summarySCC_PM25.rds")
-SCC <- readRDS("/data/Source_Classification_Code.rds")
+SCC <- readRDS("./data/Source_Classification_Code.rds")
 
 # Sampling
 NEI_sampling <- NEI[sample(nrow(NEI), size=5000, replace=F), ]

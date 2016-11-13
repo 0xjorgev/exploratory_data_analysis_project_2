@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "#------------------------------------------------------------------------\n#\n#  Across the United States, \n#  how have emissions from coal \n#  combustion-related sources \n#  changed from 1999–2008?\n#\n#------------------------------------------------------------------------\nrequire(ggplot2)\n# Set working directory\n# This assumes that both of the datasource files are in sub directory named data\nsetwd(dir = \".\")\n\n#Read both datasources\nNEI <- readRDS(\"./data/summarySCC_PM25.rds\")\nSCC <- readRDS(\"./data/Source_Classification_Code.rds\")\n\n# Coal combustion source\nSCC.coal = SCC[grepl(\"coal\", SCC$Short.Name, ignore.case=TRUE),]\n\n# Merge two data sets\nmerge <- merge(x=NEI, y=SCC.coal, by='SCC')\nmerge.sum <- aggregate(merge[, 'Emissions'], by=list(merge$year), sum)\ncolnames(merge.sum) <- c('Year', 'Emissions')\n\n# Create PNG file\npng(filename='Plot4.png')\n\nggplot(data=merge.sum, aes(x=Year, y=Emissions/1000)) + \n  geom_line(aes(group=1, col=Emissions)) + geom_point(aes(size=2, col=Emissions)) + \n  ggtitle(expression('Total Emissions of PM'[2.5])) + \n  ylab(expression(paste('PM', ''[2.5], ' in kilotons'))) + \n  geom_text(aes(label=round(Emissions/1000,digits=2), size=2, hjust=1.5, vjust=1.5)) + \n  theme(legend.position='none') + scale_colour_gradient(low='orange', high='red')\n\n# Device off\ndev.off()",
+    "created" : 1479073580208.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3855309151",
+    "id" : "50BFF916",
+    "lastKnownWriteTime" : 1479073828,
+    "last_content_update" : 1479073828474,
+    "path" : "~/dataScience/Course IV/Week IV/Plot4.R",
+    "project_path" : "Plot4.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
