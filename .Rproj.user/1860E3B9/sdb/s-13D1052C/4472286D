@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "#------------------------------------------------------------------------\n#\n#   Of the four types of sources indicated by the type \n#   (point, nonpoint, onroad, nonroad) variable, which of \n#   these four sources have seen decreases in emissions \n#   from 1999–2008 for Baltimore City? Which have seen increases \n#   in emissions from 1999–2008? Use the ggplot2 plotting system \n#   to make a plot answer this question.\n#\n#------------------------------------------------------------------------\nrequire(ggplot2)\n# Set working directory\n# This assumes that both of the datasource files are in sub directory named data\nsetwd(dir = \".\")\n\n#Read both datasources\nNEI <- readRDS(\"./data/summarySCC_PM25.rds\")\nSCC <- readRDS(\"/data/Source_Classification_Code.rds\")\n\n# Sampling\nNEI_sampling <- NEI[sample(nrow(NEI), size=5000, replace=F), ]\n\n# Baltimore City, Maryland == fips\nMD <- subset(NEI, fips == 24510)\nMD$year <- factor(MD$year, levels=c('1999', '2002', '2005', '2008'))\n\n# Create PNG file\npng(filename='Plot3.png', width=800, height=600, units='px')\n\nggplot(data=MD, aes(x=year, y=log(Emissions))) + facet_grid(. ~ type) + guides(fill=F) +\n  geom_boxplot(aes(fill=type)) + stat_boxplot(geom ='errorbar') +\n  ylab(expression(paste('Log', ' of PM'[2.5], ' Emissions'))) + xlab('Year') + \n  ggtitle('Emissions per Type in Baltimore, Maryland') +\n  geom_jitter(alpha=0.10)\n\n# Device off\ndev.off()",
+    "created" : 1479072822383.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2013166901",
+    "id" : "4472286D",
+    "lastKnownWriteTime" : 1479073372,
+    "last_content_update" : 1479073372637,
+    "path" : "~/dataScience/Course IV/Week IV/Plot3.R",
+    "project_path" : "Plot3.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

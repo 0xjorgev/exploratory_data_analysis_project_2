@@ -1,14 +1,14 @@
 {
     "collab_server" : "",
-    "contents" : "library(dplyr)\n# Set working directory\n# This assumes that both of the datasource files are in sub directory named data\nsetwd(dir = \".\")\n\n#Read both datasources\nNEI <- readRDS(\"/data/summarySCC_PM25.rds\")\nSCC <- readRDS(\"/data/Source_Classification_Code.rds\")\n\n# Summarize the data from datasource NEI\nemissionsSum <- NEI %>% group_by(year) %>% summarize(annualEmissions = sum(Emissions))\n\n# Create PNG file\npng(filename = \"Plot1.png\", height = 600, width = 600)\n\n# Plot the data, year Emissions vs total annual emissions\nplot(emissionsSum$year, emissionsSum$annualEmissions,  xlab = \"Year (1999 - 2008)\", ylab = \"PM 2.5 Annual Emissions\", pch= 19, col= \"green\")\n\n# Device off\ndev.off()",
+    "contents" : "#------------------------------------------------------------------------\n#\n#      Have total emissions from PM2.5 decreased in the United States \n#      from 1999 to 2008? Using the base plotting system, make a plot \n#      showing the total PM2.5 emission from all sources for each of \n#      the years 1999, 2002, 2005, and 2008.\n#\n#------------------------------------------------------------------------\nlibrary(dplyr)\n# Set working directory\n# This assumes that both of the datasource files are in sub directory named data\nsetwd(dir = \".\")\n\n#Read both datasources\nNEI <- readRDS(\"./data/summarySCC_PM25.rds\")\nSCC <- readRDS(\"./data/Source_Classification_Code.rds\")\n\n# Summarize the data from datasource NEI\nemissionsSum <- NEI %>% group_by(year) %>% summarize(annualEmissions = sum(Emissions))\n\n# Create PNG file\npng(filename = \"Plot1.png\", height = 600, width = 600)\n\n# Plot the data, year Emissions vs total annual emissions\nplot(emissionsSum$year, emissionsSum$annualEmissions,  xlab = \"Year (1999 - 2008)\", ylab = \"PM 2.5 Annual Emissions\", pch= 19, col= \"green\")\n\n# Device off\ndev.off()",
     "created" : 1479067794283.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "2331978643",
+    "hash" : "2327546082",
     "id" : "F0FE0920",
-    "lastKnownWriteTime" : 1479070577,
-    "last_content_update" : 1479070577062,
+    "lastKnownWriteTime" : 1479071390,
+    "last_content_update" : 1479071390216,
     "path" : "~/dataScience/Course IV/Week IV/Plot1.R",
     "project_path" : "Plot1.R",
     "properties" : {
